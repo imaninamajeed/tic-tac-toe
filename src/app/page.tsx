@@ -67,7 +67,7 @@ const Board = ({ xIsNext, squares, onPlay, winningSquares }: BoardProps) => {
 };
 
 const Game = () => {
-  const [squares, setSquares] = useState<(string | null)[]>(Array(9).fill(null));
+  const [squares, setSquares] = useState<(string | null)[]>(Array(9).fill(null)); // game board
   const [xIsNext, setXIsNext] = useState(true);
 
   const winner = useMemo(() => calculateWinner(squares), [squares]);
@@ -76,6 +76,11 @@ const Game = () => {
   const handlePlay = (nextSquares: (string | null)[]) => {
     setSquares(nextSquares);
     setXIsNext(!xIsNext);
+  };
+
+  const handleRestart = () => {
+    setSquares(Array(9).fill(null));
+    setXIsNext(true);
   };
 
   const status = winner
@@ -92,6 +97,7 @@ const Game = () => {
       </div>
       <div className="game-info">
         <div className="status">{status}</div>
+        {winner && <button onClick={handleRestart}>Restart Game</button>}
       </div>
     </div>
   );
@@ -99,14 +105,14 @@ const Game = () => {
 
 const calculateWinner = (squares: (string | null)[]) => {
   const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
+    [0, 1, 2], // top row
+    [3, 4, 5], // middle row
+    [6, 7, 8], // bottom row
+    [0, 3, 6], // left column
+    [1, 4, 7], // middle column
+    [2, 5, 8], // right column
+    [0, 4, 8], // diagonal
+    [2, 4, 6], // diagonal
   ];
 
   for (let i = 0; i < lines.length; i++) {
