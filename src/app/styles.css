@@ -39,7 +39,7 @@ body {
 }
 
 .square.winning {
-  background-color: #ff0 !important;
+  background-color: #ff0;
 }
 
 .game {
